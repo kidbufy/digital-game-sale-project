@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Purchases</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+        <% if (user && user.is_admin) { %>
+            <a href="/admin/dashboard">Admin Dashboard</a>
+        <% } %>
+    </nav>
+    <div class="container">
+        <h1>View Purchases</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Total Amount</th>
+                    <th>Purchase Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% purchases.forEach(function(purchase) { %>
+                    <tr>
+                        <td><%= purchase.user_id %></td>
+                        <td>$<%= purchase.total_amount %></td>
+                        <td><%= purchase.purchase_date %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

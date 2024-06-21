@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Game</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+        <% if (user && user.is_admin) { %>
+            <a href="/admin/dashboard">Admin Dashboard</a>
+        <% } %>
+    </nav>
+    <div class="container">
+        <h1>Edit Game</h1>
+        <form action="/admin/edit_game/<%= game.id %>" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" name="title" value="<%= game.title %>" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea name="description" required><%= game.description %></textarea>
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" name="price" step="0.01" value="<%= game.price %>" required>
+            </div>
+            <div>
+                <label for="image">Image:</label>
+                <input type="file" name="image" accept="image/*">
+            </div>
+            <button type="submit">Update Game</button>
+        </form>
+    </div>
+</body>
+</html>

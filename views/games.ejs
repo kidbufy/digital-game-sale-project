@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .add-to-cart-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+    </nav>
+    <div class="container">
+        <h1>Games</h1>
+        <% if (games.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Sales Count</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% games.forEach(function(game) { %>
+                        <tr>
+                            <td><img src="<%= game.image_url %>" alt="<%= game.title %>" style="width:150px; height:150px;"></td>
+                            <td><%= game.title %></td>
+                            <td><%= game.description %></td>
+                            <td>$<%= game.price %></td>
+                            <td><%= game.sales_count %></td>
+                            <td>
+                                <form action="/cart/add" method="POST">
+                                    <input type="hidden" name="gameId" value="<%= game.id %>">
+                                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No games available.</p>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+        <% if (user && user.is_admin) { %>
+            <a href="/admin/dashboard">Admin Dashboard</a>
+        <% } %>
+    </nav>
+    
+    <div class="container">
+        <%= body %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase History</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+        <% if (user && user.is_admin) { %>
+            <a href="/admin/dashboard">Admin Dashboard</a>
+        <% } %>
+    </nav>
+    
+    <div class="container">
+        <h1>Purchase History</h1>
+        <% if (purchases.length > 0) { %>
+            <ul>
+                <% purchases.forEach(function(purchase) { %>
+                    <li>
+                        <h2><%= purchase.title %></h2>
+                        <p>$<%= purchase.price %></p>
+                        <p>Purchased on: <%= purchase.purchase_date %></p>
+                        <form action="/purchases/return" method="POST">
+                            <input type="hidden" name="gameId" value="<%= purchase.game_id %>">
+                            <button type="submit">Return Game</button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No purchase history available.</p>
+        <% } %>
+    </div>
+</body>
+</html>

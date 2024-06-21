@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Game Market</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .news, .recommendations {
+            margin-top: 30px;
+        }
+        .news-item, .recommendation-item {
+            margin-bottom: 20px;
+        }
+        .news-title, .recommendation-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">Welcome to the Game Market</h1>
+
+        <div class="news">
+            <h2>Interesting News</h2>
+            <% news.forEach(function(item) { %>
+                <div class="news-item">
+                    <h3 class="news-title"><%= item.title %></h3>
+                    <p><%= item.description %></p>
+                </div>
+            <% }) %>
+        </div>
+
+        <div class="recommendations">
+            <h2>Game Recommendations</h2>
+            <div class="row">
+                <% recommendations.forEach(function(game) { %>
+                    <div class="col-md-4 recommendation-item">
+                        <div class="card">
+                            <img src="<%= game.image_url %>" class="card-img-top" alt="<%= game.title %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= game.title %></h5>
+                                <p class="card-text"><%= game.description %></p>
+                                <p class="card-text"><strong>Price:</strong> $<%= game.price %></p>
+                                <a href="/games/<%= game.id %>" class="btn btn-primary">View Game</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

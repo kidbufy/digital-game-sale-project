@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .total {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .btn-purchase {
+            width: 100%;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+    </nav>
+    <div class="container">
+        <h1 class="text-center">Your Cart</h1>
+
+        <% if (cartItems.length > 0) { %>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cartItems.forEach(function(item) { %>
+                        <tr>
+                            <td><img src="<%= item.image_url %>" alt="<%= item.title %>" class="img-fluid" style="width:150px; height:150px;"></td>
+                            <td><%= item.title %></td>
+                            <td><%= item.description %></td>
+                            <td>$<%= item.price %></td>
+                            <td>
+                                <form action="/cart/remove" method="POST" style="display:inline;">
+                                    <input type="hidden" name="gameId" value="<%= item.id %>">
+                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="total">Total: $<span id="cart-total"></span></span>
+                <form action="/cart/checkout" method="POST">
+                    <button type="submit" class="btn btn-success btn-purchase">Purchase</button>
+                </form>
+            </div>
+        <% } else { %>
+            <p class="text-center">Your cart is empty.</p>
+        <% } %>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                fetch('/cart/total')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('cart-total').textContent = data.total.toFixed(2);
+                    });
+            });
+        </script>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

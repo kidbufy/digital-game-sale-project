@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/games">Games</a>
+        <a href="/cart">Cart</a>
+        <a href="/purchases">Purchase History</a>
+        <% if (user) { %>
+            <a href="/auth/logout">Logout</a>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        <% } %>
+        <% if (user && user.is_admin) { %>
+            <a href="/admin/dashboard">Admin Dashboard</a>
+        <% } %>
+    </nav>
+    
+    <div class="container">
+        <h1>Register</h1>
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <% errors.forEach(function(error) { %>
+                <p style="color: red;"><%= error.msg %></p>
+            <% }); %>
+        <% } %>
+        <form action="/auth/register" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div>
+                <label for="password2">Confirm Password:</label>
+                <input type="password" name="password2" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
