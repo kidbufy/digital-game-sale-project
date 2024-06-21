@@ -25,7 +25,7 @@ This project is a game store website built with Node.js, Express, and MySQL. It 
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/gamestore.git
+    git clone https://github.com/kidbufy/digital-game-sale-project.git
     ```
 2. Navigate to the project directory:
     ```bash
